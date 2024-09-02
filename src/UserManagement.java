@@ -93,8 +93,6 @@ public class UserManagement {
     }
 
 
-
-
     // Display the User with all records
     public void displayUserConsumptionsRecords(String id) {
         User user = users.get(id);

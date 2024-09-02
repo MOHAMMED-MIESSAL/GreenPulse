@@ -59,7 +59,7 @@ public class User {
 
 
     // Show User Carbon consumption records
-    public String displayConsumption () {
+    public String displayConsumption() {
         StringBuilder message = new StringBuilder();
         message.append("\n").append("Carbon Consumption for : ").append(name).append(" (ID: ").append(id).append(")\n");
 
@@ -76,7 +76,6 @@ public class User {
 
         return message.toString();
     }
-
 
 
     public String displayInfosUsers() {
