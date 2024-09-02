@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class UserManagement {
 
     private Map<String, User> users = new HashMap<>();
-    private Map<String, CarbonConsumption> carbonConsumptions = new HashMap<>();
 
     // Create User function
     public void createUser(String name, int age, String id) {
@@ -85,13 +84,11 @@ public class UserManagement {
     public void displayUserConsumptions(String id) {
         User user = users.get(id);
         if (user != null) {
-            // System.out.println(user.displayConsumption());
             System.out.println(user.displayTotalConsumption());
         } else {
             System.out.println("User not found!");
         }
     }
-
 
     // Display the User with all records
     public void displayUserConsumptionsRecords(String id) {

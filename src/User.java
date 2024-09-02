@@ -1,9 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDateTime;
-import java.util.stream.Collectors;
-import java.time.temporal.ChronoUnit;
-
 
 public class User {
     private String id;
@@ -57,8 +53,6 @@ public class User {
         return message.toString();
     }
 
-
-    // Show User Carbon consumption records
     public String displayConsumption() {
         StringBuilder message = new StringBuilder();
         message.append("\n").append("Carbon Consumption for : ").append(name).append(" (ID: ").append(id).append(")\n");
@@ -76,7 +70,6 @@ public class User {
 
         return message.toString();
     }
-
 
     public String displayInfosUsers() {
         return " * \n  " + "Name: " + name + " \t Age: " + age + " \t ID: " + id;

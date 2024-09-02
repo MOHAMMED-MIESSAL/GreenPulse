@@ -63,11 +63,11 @@ public class Main {
                     id = scanner.nextLine();
                     userManagement.displayUserConsumptions(id);
                     break;
-                case 7:
-                    System.out.print("Enter user ID: ");
-                    id = scanner.nextLine();
-//                   userManagement.displayWeeklyConsumption(id);
-                    break;
+//                case 7:
+//                    System.out.print("Enter user ID: ");
+//                    id = scanner.nextLine();
+//                    userManagement.displayWeeklyConsumption(id);
+//                    break;
                 case 8:
                     userManagement.displayAllUsersConsumptions();
                     break;
