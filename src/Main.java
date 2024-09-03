@@ -13,7 +13,7 @@ public class Main {
             System.out.println("4. Display Users");
             System.out.println("5. Add Carbon Consumption");
             System.out.println("6. Display User Total Consumptions");
-            System.out.println("7. Display Weekly Consumption");
+            System.out.println("7. Display User Daily Report");
             System.out.println("8. Display All Users and their carbon consumptions ");
             System.out.println("9. Display User consumptions records  ");
             System.out.println("10. Exit");
@@ -63,11 +63,11 @@ public class Main {
                     id = scanner.nextLine();
                     userManagement.displayUserConsumptions(id);
                     break;
-//                case 7:
-//                    System.out.print("Enter user ID: ");
-//                    id = scanner.nextLine();
-//                    userManagement.displayWeeklyConsumption(id);
-//                    break;
+                case 7:
+                    System.out.print("Enter user ID: ");
+                    id = scanner.nextLine();
+                    userManagement.displayUserDailyReport(id);
+                    break;
                 case 8:
                     userManagement.displayAllUsersConsumptions();
                     break;

@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +62,12 @@ public class User {
             message.append("No consumption data available.\n");
         } else {
             for (CarbonConsumption consumption : consumptions) {
-                message.append("Date: ").append(consumption.getDateTime())
-                        .append(", Consumption: ").append(consumption.getConsumption())
-                        .append(" kg CO2\n");
+                message.append(" Start Date: ").append(consumption.getStartDateTime())
+                        .append(" <---> End Date: ").append(consumption.getEndDateTime()).append("\n")
+                        .append(" Consumption: ").append(consumption.getConsumption())
+                        .append(" kg CO2\n").append("\n");
             }
-            message.append("Total Consumption: ").append(getTotalConsumption()).append(" kg CO2\n");
+            // message.append(" Total Consumption: ").append(getTotalConsumption()).append(" kg CO2\n");
         }
 
         return message.toString();
@@ -75,4 +77,34 @@ public class User {
         return " * \n  " + "Name: " + name + " \t Age: " + age + " \t ID: " + id;
     }
 
+    public long getTotalDurationInDays() {
+        long totalDurationInDays = 0;
+
+        for (CarbonConsumption consumption : consumptions) {
+            long durationInDays = Duration.between(consumption.getStartDateTime(), consumption.getEndDateTime()).toDays();
+            totalDurationInDays += durationInDays;
+        }
+
+        return totalDurationInDays;
+    }
+
+    public double getAverageDailyConsumption() {
+        long totalDurationInDays = getTotalDurationInDays();
+
+        if (totalDurationInDays == 0) {
+            return getTotalConsumption();
+        }
+
+        return getTotalConsumption() / totalDurationInDays;
+    }
+
+    public String displayAverageDailyConsumption() {
+        double averageDailyConsumption = getAverageDailyConsumption();
+        long totalDurationInDays = getTotalDurationInDays();
+        double totalConsumption = getTotalConsumption();
+
+        return "Total duration of all consumption periods: " + totalDurationInDays + " days\n" +
+                "Total consumption: " + totalConsumption + " kg CO2\n" +
+                "Average daily consumption: " + averageDailyConsumption + " kg CO2/day\n";
+    }
 }

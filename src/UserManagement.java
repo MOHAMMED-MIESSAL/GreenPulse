@@ -61,16 +61,24 @@ public class UserManagement {
         if (user != null) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Enter the date and time of carbon consumption (format: yyyy-MM-dd HH:mm): ");
-            String dateTimeInput = scanner.nextLine();
-
+            // Start Date :
+            System.out.println("Enter the Start date and time of carbon consumption (format: yyyy-MM-dd HH:mm): ");
+            String startDateTimeInput = scanner.nextLine();
             // Define date and time format
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+            // End Date :
+            System.out.println("Enter the End date and time of carbon consumption (format: yyyy-MM-dd HH:mm): ");
+            String endDateTimeInput = scanner.nextLine();
+            // Define date and time format
+            DateTimeFormatter formatterEndDate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
             try {
                 // Parse dateTimeInput to LocalDateTime
-                LocalDateTime dateTime = LocalDateTime.parse(dateTimeInput, formatter);
-                user.addConsumption(new CarbonConsumption(dateTime, consumption));
+                LocalDateTime StartDateTime = LocalDateTime.parse(startDateTimeInput, formatter);
+                LocalDateTime EndDateTime = LocalDateTime.parse(endDateTimeInput, formatterEndDate);
+                user.addConsumption(new CarbonConsumption(StartDateTime, EndDateTime, consumption));
                 System.out.println("Consumption added successfully.");
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date and time format. Please try again.");
@@ -110,6 +118,16 @@ public class UserManagement {
                 System.out.println(user.displayInfosUsers());
                 System.out.println(user.displayTotalConsumption());
             }
+        }
+    }
+
+    // Display Daily Report
+    public void displayUserDailyReport(String id) {
+        User user = users.get(id);
+        if (user != null) {
+            System.out.println(user.displayAverageDailyConsumption());
+        } else {
+            System.out.println("User not found!");
         }
     }
 }
