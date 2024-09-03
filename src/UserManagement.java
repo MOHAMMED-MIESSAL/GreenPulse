@@ -130,4 +130,14 @@ public class UserManagement {
             System.out.println("User not found!");
         }
     }
+
+    // Display Weekly Report
+    public void displayUserWeeklyReport(String id) {
+        User user = users.get(id);
+        if (user != null) {
+            System.out.println(user.displayDetailedWeeklyReport());
+        } else {
+            System.out.println("User not found!");
+        }
+    }
 }

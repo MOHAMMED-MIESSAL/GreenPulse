@@ -27,13 +27,13 @@ public class CarbonConsumption {
     }
 
     // Method to calculate daily consumption
-    public double getDailyConsumption() {
-        // Calculate the duration between start and end dates in days
-        long days = Duration.between(StartDateTime, EndDateTime).toDays();
-        if (days == 0) {
-            days = 1; // avoid division by 0
-        }
-
-        return consumption / days;
-    }
+//    public double getDailyConsumption() {
+//        // Calculate the duration between start and end dates in days
+//        long days = Duration.between(StartDateTime, EndDateTime).toDays();
+//        if (days == 0) {
+//            days = 1; // avoid division by 0
+//        }
+//
+//        return consumption / days;
+//    }
 }
