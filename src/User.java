@@ -1,10 +1,11 @@
 import java.time.Duration;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.HashMap;
 import java.util.Map;
 
 public class User {
@@ -159,7 +160,66 @@ public class User {
         return report.toString();
     }
 
-    // Méthode pour calculer la consommation pour une période spécifique
+    public String displayMonthlyReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("Monthly Carbon Consumption Report for ").append(name).append(":\n");
+        report.append("====================================================\n");
+
+        if (consumptions.isEmpty()) {
+            report.append("No consumption data available.\n");
+            return report.toString();
+        }
+
+        // Map to store consumption by month
+        Map<String, Double> monthlyConsumptionMap = new HashMap<>();
+        Map<String, LocalDate> startDateMap = new HashMap<>();  // To store the real start date for each period
+        Map<String, LocalDate> endDateMap = new HashMap<>();    // To store the real end date for each period
+
+        for (CarbonConsumption consumption : consumptions) {
+            LocalDate startDate = consumption.getStartDateTime().toLocalDate();
+            LocalDate endDate = consumption.getEndDateTime().toLocalDate();
+
+            while (!startDate.isAfter(endDate)) {
+                // Calculate the end of the month
+                YearMonth yearMonth = YearMonth.from(startDate);
+                LocalDate monthEnd = yearMonth.atEndOfMonth();
+
+                // Limit the period to endDate if it ends before the end of the month
+                LocalDate periodEndDate = monthEnd.isBefore(endDate) ? monthEnd : endDate;
+
+                // Calculate consumption for this period
+                double monthlyConsumption = calculateConsumptionForPeriod(consumption, startDate, periodEndDate);
+
+                // Store consumption in the map
+                String monthKey = startDate.getYear() + "-" + startDate.getMonthValue();  // e.g., "2024-09"
+                monthlyConsumptionMap.put(monthKey, monthlyConsumptionMap.getOrDefault(monthKey, 0.0) + monthlyConsumption);
+
+                // Store the real start and end dates for each period
+                startDateMap.put(monthKey, startDate);
+                endDateMap.put(monthKey, periodEndDate);
+
+                // Move to the next month
+                startDate = periodEndDate.plusDays(1);
+            }
+        }
+
+        // Generate the monthly report
+        for (Map.Entry<String, Double> entry : monthlyConsumptionMap.entrySet()) {
+            String formattedConsumption = String.format("%.2f", entry.getValue());  // Limit to two decimal places
+            LocalDate realStartDate = startDateMap.get(entry.getKey());
+            LocalDate realEndDate = endDateMap.get(entry.getKey());
+
+            // Organized display with separators and indentations
+            report.append("Period: ").append(realStartDate).append(" to ").append(realEndDate).append("\n")
+                    .append("----------------------------------------------------\n")
+                    .append("Consumption: ").append(formattedConsumption).append(" kg CO2\n")
+                    .append("====================================================\n");
+        }
+
+        return report.toString();
+    }
+
+    // Calculate consumption for a specific period
     private double calculateConsumptionForPeriod(CarbonConsumption consumption, LocalDate startDate, LocalDate endDate) {
         long totalDays = Duration.between(consumption.getStartDateTime().toLocalDate().atStartOfDay(), consumption.getEndDateTime().toLocalDate().plusDays(1).atStartOfDay()).toDays();
         long periodDays = Duration.between(startDate.atStartOfDay(), endDate.plusDays(1).atStartOfDay()).toDays();

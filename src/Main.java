@@ -17,7 +17,8 @@ public class Main {
             System.out.println("8. Display All Users and their carbon consumptions ");
             System.out.println("9. Display User consumptions records  ");
             System.out.println("10. Display Weekly Report  ");
-            System.out.println("11. Exit");
+            System.out.println("11. Display Monthly Report  ");
+            System.out.println("12. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -77,12 +78,17 @@ public class Main {
                     id = scanner.nextLine();
                     userManagement.displayUserConsumptionsRecords(id);
                     break;
-                    case 10:
-                        System.out.print("Enter user ID: ");
-                        id = scanner.nextLine();
-                        userManagement.displayUserWeeklyReport(id);
-                        break;
+                case 10:
+                    System.out.print("Enter user ID: ");
+                    id = scanner.nextLine();
+                    userManagement.displayUserWeeklyReport(id);
+                    break;
                 case 11:
+                    System.out.print("Enter user ID: ");
+                    id = scanner.nextLine();
+                    userManagement.displayUserMonthlyReport(id);
+                    break;
+                case 12:
                     System.out.println("Exiting...");
                     System.exit(0);
                     break;

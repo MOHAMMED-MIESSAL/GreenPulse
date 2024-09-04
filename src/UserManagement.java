@@ -140,4 +140,14 @@ public class UserManagement {
             System.out.println("User not found!");
         }
     }
+
+    // Display Monthly Report
+    public void displayUserMonthlyReport(String id) {
+        User user = users.get(id);
+        if (user != null) {
+            System.out.println(user.displayMonthlyReport());
+        } else {
+            System.out.println("User not found!");
+        }
+    }
 }
